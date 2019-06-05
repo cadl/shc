@@ -75,7 +75,7 @@ class HBaseTestSuite extends FunSuite with BeforeAndAfterEach with BeforeAndAfte
 
   def setupTable() {
     val config = htu.getConfiguration
-    htu.createMultiRegionTable(TableName.valueOf(tableName), columnFamilies)
+    htu.createTable(tableName, columnFamilies, HBaseTestingUtility.KEYS_FOR_HBA_CREATE_TABLE)
     println("create htable t1")
     val connection = ConnectionFactory.createConnection(config)
     val r = connection.getRegionLocator(TableName.valueOf("t1"))

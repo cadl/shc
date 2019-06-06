@@ -21,26 +21,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.apache</groupId>
-    <artifactId>apache</artifactId>
-    <version>14</version>
-  </parent>
-  <groupId>com.hortonworks</groupId>
+  <groupId>com.xiachufang</groupId>
   <artifactId>shc</artifactId>
   <version>1.1.0-2.0-s_2.11</version>
   <packaging>pom</packaging>
   <name>HBase Spark Connector Project Parent POM</name>
-  <url>https://github.com/hortonworks-spark/shc</url>
-
-  <distributionManagement>
-      <repository>
-          <id>${repoid}</id>
-          <name>${reponame}</name>
-          <url>${repourl}</url>
-      </repository>
-  </distributionManagement>
-
+  <url>https://github.com/xiachufang/shc</url>
+  <description>hbase connector for spark</description>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>liujialin</name>
+      <id>cadl</id>
+      <email>ctrlaltdeleteliu@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
   <properties>
     <spark.version>2.0.2</spark.version>
     <hbase.version>1.0.0-cdh5.4.4</hbase.version>
@@ -70,34 +76,16 @@
       <!-- This should be at top, it makes maven try the central repo first and then others and hence faster dep resolution -->
       <name>Maven Repository</name>
       <url>https://repo1.maven.org/maven2</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
     </repository>
     <repository>
       <id>apache-repo</id>
       <name>Apache Repository</name>
       <url>https://repository.apache.org/content/repositories/releases</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
     </repository>
     <repository>
       <id>cloudera</id>
       <name>Cloudera Rel Repository</name>
       <url>https://repository.cloudera.com/content/repositories/releases</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
     </repository>
   </repositories>
 
@@ -132,6 +120,7 @@
             <phase>process-resources</phase>
             <goals>
               <goal>compile</goal>
+              <goal>add-source</goal>
             </goals>
           </execution>
           <execution>
@@ -189,6 +178,45 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -216,5 +244,20 @@
       </properties>
     </profile>
   </profiles>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+  <scm>
+    <url>https://github.com/xiachufang/shc</url>
+    <connection>https://github.com/xiachufang/shc.git</connection>
+  </scm>
 
 </project>

@@ -104,7 +104,7 @@ class SHC  extends FunSuite with BeforeAndAfterEach with BeforeAndAfterAll  with
       case _ : Throwable =>
         logInfo(" - no table " + name + " found")
     }
-    htu.createMultiRegionTable(TableName.valueOf(tName), bcfs)
+    htu.createTable(tName, bcfs, HBaseTestingUtility.KEYS_FOR_HBA_CREATE_TABLE)
   }
 
 
@@ -115,6 +115,6 @@ class SHC  extends FunSuite with BeforeAndAfterEach with BeforeAndAfterAll  with
       case _ : Throwable =>
         logInfo(" - no table " + Bytes.toString(name) + " found")
     }
-    htu.createMultiRegionTable(TableName.valueOf(name), cfs)
+    htu.createTable(name, cfs, HBaseTestingUtility.KEYS_FOR_HBA_CREATE_TABLE)
   }
 }
